@@ -1,6 +1,8 @@
 [submodule "apps/api"]
 	path = apps/api
-	url = https://github.com/comfy-deploy/api
+	url = https://github.com/if-ai/comfydeploy-api-private.git
+	branch = main
 [submodule "apps/app"]
 	path = apps/app
-	url = https://github.com/comfy-deploy/app
+	url = https://github.com/if-ai/comfydeploy-app-private.git
+	branch = main

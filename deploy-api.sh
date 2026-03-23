@@ -59,6 +59,8 @@ ssh -o StrictHostKeyChecking=no "${DEPLOY_USER}@${VPS_HOST}" <<EOF
   if docker service ls --format '{{.Name}}' | grep -q "^${SERVICE_NAME}$"; then
     docker service update \
       --image "\${SERVICE_NAME}:\${TAG}" \
+      --mount-add type=bind,source=/etc/comfydeploy/.env.infisical,target=/etc/comfydeploy/.env.infisical \
+      --cap-add CAP_DAC_OVERRIDE \
       --detach=false \
       "\${SERVICE_NAME}"
   else
@@ -67,7 +69,8 @@ ssh -o StrictHostKeyChecking=no "${DEPLOY_USER}@${VPS_HOST}" <<EOF
       --name "\${SERVICE_NAME}" \
       --network dokploy-network \
       --publish published=8080,target=8080,mode=host \
-      --mount type=bind,source=/etc/comfydeploy/.env.infisical,target=/etc/comfydeploy/.env.infisical,readonly \
+      --mount type=bind,source=/etc/comfydeploy/.env.infisical,target=/etc/comfydeploy/.env.infisical \
+      --cap-add CAP_DAC_OVERRIDE \
       --detach=false \
       "\${SERVICE_NAME}:\${TAG}"
   fi
